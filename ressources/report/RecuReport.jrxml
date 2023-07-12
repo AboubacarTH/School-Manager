@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="403" orientation="Landscape" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="57cdf5e5-c8f0-428d-bb90-6aa8f3da6874">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<parameter name="date" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nom_prenom" class="java.lang.String"/>
+	<parameter name="montant" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="libelle" class="java.lang.String"/>
+	<parameter name="annee" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="id_eleve" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT * FROM comptabilite JOIN personne ON comptabilite.id_eleve = personne.id WHERE annee = $P{annee} AND id_eleve = $P{id_eleve} AND intitule_versement = $P{libelle}]]>
+	</queryString>
+	<field name="id_eleve" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="classe" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="annee" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="intitule_versement" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="date_versement" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="montant" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nom" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="prenom" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="date_de_naissance" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="lieu_de_naissance" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="adresse" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement x="72" y="4" width="471" height="50" uuid="23a0691d-3c50-41f3-9637-f23abb029008"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[REPUBLIQUE DU NIGER / DRES NIAMEY / DDES NY 1 COMPLEXE SCOLAIRE PRIVE FLOT GERMANT Tél : (227) 96 26 03 37 Site Web : www.flotgermant.net]]></text>
+			</staticText>
+			<image hAlign="Center" vAlign="Middle" onErrorType="Blank">
+				<reportElement x="1" y="4" width="72" height="50" uuid="7700eac7-df2e-4471-a1e4-331cdba76ea6"/>
+				<imageExpression><![CDATA["C:\\Geschool\\ressources\\logo\\logo.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="0" width="533" height="30" uuid="e08fbac0-654c-496d-82bf-c7af9dc5bd09"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Cambria Math" size="14"/>
+				</textElement>
+				<text><![CDATA[Reçu de paiement]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="239" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="48" width="61" height="20" uuid="be643c9f-4a1d-4b60-a4c8-49640656f80d"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Reçu de :]]></text>
+			</staticText>
+			<line>
+				<reportElement x="100" y="68" width="443" height="1" uuid="726e0845-97db-4aa1-b282-ae257a79c62a"/>
+			</line>
+			<staticText>
+				<reportElement x="328" y="18" width="45" height="20" uuid="aebbffe2-8d9a-4aa3-8807-313fe4be0637"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Date :]]></text>
+			</staticText>
+			<line>
+				<reportElement x="373" y="38" width="170" height="1" uuid="2bdc6991-dc5b-4508-ae7b-98cb330cdcfe"/>
+			</line>
+			<staticText>
+				<reportElement x="10" y="84" width="90" height="20" uuid="c6c7c53a-1d65-41ea-a3db-d699819597ac"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[La somme de :]]></text>
+			</staticText>
+			<line>
+				<reportElement x="100" y="104" width="443" height="1" uuid="f5b666a0-2643-407b-b490-2abf9d50b201"/>
+			</line>
+			<staticText>
+				<reportElement x="10" y="121" width="90" height="20" uuid="8f3d5775-f77d-43d5-91ef-b9bc1e748f3b"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Pour :]]></text>
+			</staticText>
+			<line>
+				<reportElement x="100" y="141" width="443" height="1" uuid="728845a9-7d53-4d8d-af76-a1cc22a8e28e"/>
+			</line>
+			<staticText>
+				<reportElement x="10" y="162" width="90" height="20" uuid="1423906d-b303-4f38-9988-ad404c72937e"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Signature :]]></text>
+			</staticText>
+			<line>
+				<reportElement x="100" y="182" width="443" height="1" uuid="1c402790-60a8-4074-9a58-2cbf31a38b6c"/>
+			</line>
+			<textField pattern="dd-MMM-yy">
+				<reportElement x="373" y="18" width="170" height="20" uuid="64f79f1d-4f2e-4a41-b853-fe0f6498bc0f"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{date}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MMM-yy">
+				<reportElement x="100" y="49" width="443" height="20" uuid="1fd92c4e-e0f3-433f-98b7-22e64a33d809"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nom} + " " +$F{prenom}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MMM-yy">
+				<reportElement x="100" y="84" width="443" height="20" uuid="2887333f-3754-438d-b294-cb6c134d8ae6"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{montant}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MMM-yy">
+				<reportElement x="100" y="121" width="443" height="20" uuid="a37d4146-d119-44c1-8d0d-14d5aabe8aa1"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{intitule_versement} + " Classe : " + $F{classe}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
