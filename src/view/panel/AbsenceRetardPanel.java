@@ -39,9 +39,10 @@ public class AbsenceRetardPanel extends javax.swing.JPanel {
         initComponents();
         init_combo_box_annee();
         init_combo_box_cycle();
+        init_combo_box_classe();
+        table_eleve();
         table_absence();
         table_retard();
-        table_eleve();
     }
 
     /**
@@ -225,6 +226,12 @@ public class AbsenceRetardPanel extends javax.swing.JPanel {
                     .addComponent(button_remove))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        tabbedPane.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                tabbedPaneStateChanged(evt);
+            }
+        });
 
         table_eleve.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -417,19 +424,22 @@ public class AbsenceRetardPanel extends javax.swing.JPanel {
 
     private void combo_box_anneeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combo_box_anneeActionPerformed
         init_combo_box_classe();
+        table_eleve();
+        table_absence();
+        table_retard();
     }//GEN-LAST:event_combo_box_anneeActionPerformed
 
     private void combo_box_cycleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combo_box_cycleActionPerformed
         init_combo_box_classe();
+        table_eleve();
         table_absence();
         table_retard();
-        table_eleve();
     }//GEN-LAST:event_combo_box_cycleActionPerformed
 
     private void combo_box_classeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combo_box_classeActionPerformed
+        table_eleve();
         table_absence();
         table_retard();
-        table_eleve();
     }//GEN-LAST:event_combo_box_classeActionPerformed
 
     private void date_chooserPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_date_chooserPropertyChange
@@ -460,6 +470,12 @@ public class AbsenceRetardPanel extends javax.swing.JPanel {
             remove_sanction();
         }
     }//GEN-LAST:event_button_removeActionPerformed
+
+    private void tabbedPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabbedPaneStateChanged
+        table_absence();
+        table_retard();
+        table_eleve();
+    }//GEN-LAST:event_tabbedPaneStateChanged
     private final HashMap<Integer, Long> id_annees, id_cycles, id_classes, id_table_absences, id_table_retards, id_table_eleves;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button_new;
@@ -493,7 +509,7 @@ public class AbsenceRetardPanel extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) table_absence.getModel();
         model.setRowCount(0);
         id_table_absences.clear();
-        if (combo_box_annee.getSelectedIndex() < 0 || combo_box_cycle.getSelectedIndex() < 0 || combo_box_classe.getSelectedIndex() < 0) {
+        if (tabbedPane.getSelectedIndex() != 1 || combo_box_annee.getSelectedIndex() < 0 || combo_box_cycle.getSelectedIndex() < 0 || combo_box_classe.getSelectedIndex() < 0) {
             return;
         }
         Long id_annee = id_annees.get(combo_box_annee.getSelectedIndex());
@@ -532,7 +548,7 @@ public class AbsenceRetardPanel extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) table_retard.getModel();
         model.setRowCount(0);
         id_table_retards.clear();
-        if (combo_box_annee.getSelectedIndex() < 0 || combo_box_cycle.getSelectedIndex() < 0 || combo_box_classe.getSelectedIndex() < 0) {
+        if (tabbedPane.getSelectedIndex() != 2 || combo_box_annee.getSelectedIndex() < 0 || combo_box_cycle.getSelectedIndex() < 0 || combo_box_classe.getSelectedIndex() < 0) {
             return;
         }
         Long id_annee = id_annees.get(combo_box_annee.getSelectedIndex());
@@ -571,41 +587,37 @@ public class AbsenceRetardPanel extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) table_eleve.getModel();
         model.setRowCount(0);
         id_table_eleves.clear();
-        try {
-            if (combo_box_annee.getSelectedIndex() < 0 || combo_box_cycle.getSelectedIndex() < 0 || combo_box_classe.getSelectedIndex() < 0) {
-                return;
-            }
-            Long id_annee = id_annees.get(combo_box_annee.getSelectedIndex());
-            Long id_cycle = id_cycles.get(combo_box_cycle.getSelectedIndex());
-            Long id_classe = id_classes.get(combo_box_classe.getSelectedIndex());
-            Long id_nationalite = null;
-            String rechercher = null;
-            if (!text_field_rechercher.getText().isBlank()) {
-                rechercher = text_field_rechercher.getText();
-            }
-            ArrayList<EleveClasse> list = getController().getEleveClasseController().gets(null, id_annee, id_cycle, id_classe, rechercher, id_nationalite, null);
-            for (int i = 0; i < list.size(); i++) {
-                Object row[] = new Object[7];
-                EleveClasse eleveClasse = list.get(i);
-                Eleve eleve = getController().getEleveController().get(eleveClasse.getId_eleve());
-                Classe classe = getController().getClasseController().get(eleveClasse.getId_classe());
-                row[0] = i + 1;
-                row[1] = classe.getClasse();
-                row[2] = eleve.getMatricule();
-                row[3] = eleve.getNom_prenom();
-                row[4] = getController().getAbsenceController().gets(eleve.getId(), id_annee, id_classe, null, null).size();
-                row[5] = getController().getRetardController().gets(eleve.getId(), id_annee, id_classe, null, null).size();
-                row[6] = eleve.getContact();
-                id_table_eleves.put(i, eleve.getId());
-                model.addRow(row);
-            }
-            table_eleve.setModel(model);
-            table_eleve.setShowVerticalLines(true);
-            table_eleve.setShowHorizontalLines(true);
-        } catch (Exception e) {
-            model.setRowCount(0);
-            id_table_eleves.clear();
+
+        if (tabbedPane.getSelectedIndex() != 0 || combo_box_annee.getSelectedIndex() < 0 || combo_box_cycle.getSelectedIndex() < 0 || combo_box_classe.getSelectedIndex() < 0) {
+            return;
         }
+        Long id_annee = id_annees.get(combo_box_annee.getSelectedIndex());
+        Long id_cycle = id_cycles.get(combo_box_cycle.getSelectedIndex());
+        Long id_classe = id_classes.get(combo_box_classe.getSelectedIndex());
+        Long id_nationalite = null;
+        String rechercher = null;
+        if (!text_field_rechercher.getText().isBlank()) {
+            rechercher = text_field_rechercher.getText();
+        }
+        ArrayList<EleveClasse> list = getController().getEleveClasseController().gets(null, id_annee, id_cycle, id_classe, rechercher, id_nationalite, null);
+        for (int i = 0; i < list.size(); i++) {
+            Object row[] = new Object[7];
+            EleveClasse eleveClasse = list.get(i);
+            Eleve eleve = getController().getEleveController().get(eleveClasse.getId_eleve());
+            Classe classe = getController().getClasseController().get(eleveClasse.getId_classe());
+            row[0] = i + 1;
+            row[1] = classe.getClasse();
+            row[2] = eleve.getMatricule();
+            row[3] = eleve.getNom_prenom();
+            row[4] = getController().getAbsenceController().gets(eleve.getId(), id_annee, id_classe, null, null).size();
+            row[5] = getController().getRetardController().gets(eleve.getId(), id_annee, id_classe, null, null).size();
+            row[6] = eleve.getContact();
+            id_table_eleves.put(i, eleve.getId());
+            model.addRow(row);
+        }
+        table_eleve.setModel(model);
+        table_eleve.setShowVerticalLines(true);
+        table_eleve.setShowHorizontalLines(true);
     }
 
     private void init_combo_box_annee() {

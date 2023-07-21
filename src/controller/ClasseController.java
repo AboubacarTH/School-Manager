@@ -145,9 +145,9 @@ public class ClasseController {
                     + "classes.id_cycle, "
                     + "classes.classe  "
                     + "FROM classes "
-                    + "JOIN matiere_classes ON "
+                    + "INNER JOIN matiere_classes ON "
                     + "classes.id = matiere_classes.id_classe "
-                    + "JOIN professeur_matiere_classes ON "
+                    + "INNER JOIN professeur_matiere_classes ON "
                     + "matiere_classes.id = professeur_matiere_classes.id_matiere_classe "
                     + "WHERE classes.id_annee = ? AND classes.id_cycle = ? AND professeur_matiere_classes.id_professeur = ? ";
             preparedStatement = connection.prepareStatement(req);

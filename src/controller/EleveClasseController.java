@@ -114,7 +114,10 @@ public class EleveClasseController {
     public ArrayList<EleveClasse> gets(Long id_eleve, Long id_annee, Long id_cycle, Long id_classe, String rechercher, Long id_nationalite, String sexe) {
         try {
             ArrayList<EleveClasse> list = new ArrayList<>();
-            String req = "SELECT eleve_classes.id, eleve_classes.id_eleve, eleve_classes.id_classe FROM eleve_classes JOIN eleves ON eleve_classes.id_eleve = eleves.id JOIN classes ON eleve_classes.id_classe = classes.id "
+            String req = "SELECT eleve_classes.id, eleve_classes.id_eleve, eleve_classes.id_classe "
+                    + "FROM eleve_classes "
+                    + "INNER JOIN eleves ON eleve_classes.id_eleve = eleves.id "
+                    + "INNER JOIN classes ON eleve_classes.id_classe = classes.id "
                     + "WHERE eleve_classes.id > '0' ";
             if (id_eleve != null) {
                 req += "AND eleve_classes.id_eleve = '" + id_eleve + "' ";

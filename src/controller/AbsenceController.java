@@ -87,9 +87,9 @@ public class AbsenceController {
         ArrayList<Absence> list = new ArrayList<>();
         try {
             String req = "SELECT absences.id, absences.id_eleve_classe, absences.date, absences.commentaire FROM absences "
-                    + "JOIN eleve_classes ON eleve_classes.id = absences.id_eleve_classe "
-                    + "JOIN eleves ON eleve_classes.id_eleve = eleves.id "
-                    + "JOIN classes ON eleve_classes.id_classe = classes.id "
+                    + "INNER JOIN eleve_classes ON eleve_classes.id = absences.id_eleve_classe "
+                    + "INNER JOIN eleves ON eleve_classes.id_eleve = eleves.id "
+                    + "INNER JOIN classes ON eleve_classes.id_classe = classes.id "
                     + "WHERE absences.id > '0' ";
             if (id_eleve != null) {
                 req += "AND eleves.id = '" + id_eleve + "' ";
